@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <style>
+        /* Estilos para a lista de detalhes */
+        #pokemon-details {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokédex</h1>
+    <ul id="pokemon-list">
+        <!-- Preencha esta lista com os nomes e imagens dos Pokémons a partir da API -->
+        <li>
+            <img src="pokemon1.jpg" alt="Pokemon 1">
+            <span class="pokemon-name">Pokemon 1</span>
+        </li>
+        <li>
+            <img src="pokemon2.jpg" alt="Pokemon 2">
+            <span class="pokemon-name">Pokemon 2</span>
+        </li>
+        <!-- Adicione mais Pokémons conforme necessário -->
+    </ul>
+    <div id="pokemon-details">
+        <h2>Detalhes do Pokémon</h2>
+        <h3>Nome: <span id="pokemon-details-name"></span></h3>
+        <h3>Ataques:</h3>
+        <ul id="pokemon-attacks"></ul>
+        <h3>Movimentos:</h3>
+        <ul id="pokemon-moves"></ul>
+    </div>
+
+    <script>
+        // Event listener para lidar com cliques nos Pokémons
+        const pokemonList = document.getElementById("pokemon-list");
+        const pokemonDetails = document.getElementById("pokemon-details");
+        const pokemonName = document.getElementById("pokemon-details-name");
+        const pokemonAttacks = document.getElementById("pokemon-attacks");
+        const pokemonMoves = document.getElementById("pokemon-moves");
+
+        // Simule as informações do Pokémon obtidas da API
+        const pokemonData = {
+            "Pokemon 1": {
+                name: "Pokemon 1",
+                attacks: ["Ataque 1", "Ataque 2"],
+                moves: ["Movimento 1", "Movimento 2"]
+            },
+            "Pokemon 2": {
+                name: "Pokemon 2",
+                attacks: ["Ataque 3", "Ataque 4"],
+                moves: ["Movimento 3", "Movimento 4"]
+            },
+            // Adicione mais informações de Pokémon conforme necessário
+        };
+
+        pokemonList.addEventListener("click", (event) => {
+            if (event.target.className === "pokemon-name" || event.target.tagName === "IMG") {
+                const pokemonName = event.target.closest("li").querySelector(".pokemon-name").textContent;
+                displayPokemonDetails(pokemonName);
+            }
+        });
+
+        function displayPokemonDetails(name) {
+            const pokemon = pokemonData[name];
+            if (pokemon) {
+                pokemonName.textContent = pokemon.name;
+                pokemonAttacks.innerHTML = "";
+                pokemonMoves.innerHTML = "";
+                pokemon.attacks.forEach((attack) => {
+                    const li = document.createElement("li");
+                    li.textContent = attack;
+                    pokemonAttacks.appendChild(li);
+                });
+                pokemon.moves.forEach((move) => {
+                    const li = document.createElement("li");
+                    li.textContent = move;
+                    pokemonMoves.appendChild(li);
+                });
+                pokemonDetails.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
